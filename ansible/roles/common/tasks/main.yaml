@@ -1,0 +1,24 @@
+
+- name: Print hostname
+  debug:
+    msg: Running on {{ inventory_hostname }}
+
+- name: Display all variables/facts known for a host
+  debug:
+    var: hostvars[inventory_hostname]
+    verbosity: 2
+
+- name: Install packages
+  package:
+    name: "{{ item }}"
+    state: present
+    use: auto #Auto detect yum, apt or another
+  with_items:
+    - python3
+    - python3-pip
+    - curl
+    - jq
+    - htop
+
+- name: Install Java
+  include_tasks: install-java.yml
